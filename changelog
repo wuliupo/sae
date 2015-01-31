@@ -1,0 +1,77 @@
+        ######        ###       ########
+      ##    ##      ## ##      ##
+      ##           ##   ##     ##
+       ######     ##     ##    ######
+            ##    #########    ##
+      ##    ##    ##     ##    ##
+       ######     ##     ##    ########
+
+Sina App Engine Local Environment, power by sae.sina.com.cn
+-------------------------------------------------
+
+2012-04-12 [Version 1.3.1 released]
+[bug]	*windows 64位机器上不能设置密码
+
+2012-04-10 [Version 1.3.0 released]
+[new]	*添加代码下载与代码上传的功能
+[new]	*用户可以配置本地开发环境启动时是否加载xdebug扩展，默认是启动时不加载该模块
+[new]	*用户可以配置本地开发环境访问时的域名
+[new]	*修改了help命令的显示方式
+
+
+[bug]	*创建storage时可能会失败
+[bug]	*使用tool.cmd时报错
+[bug]	*appconfig服务中有些rewrite不起作用
+本地升级需要用户重新配置sae.conf文件，原来的sae.conf文件被保存为sae.conf.old文件
+
+2012-03-21 [Version 1.2.0 released]
+[new]	*支持XHProf服务
+[new]	*添加XDebug扩展
+[new]	*添加命令apachestop,apachestart,apacherestart apachestat命令来操作apache
+[new]	*添加命令addhost,delhost,openhost,closehost命令，用来添加删除host
+[new]	*restart命令本来是用来重启apache的，这个升级修改为重启本地开发环境
+[new]	*本地开发环境使用了线上禁用函数proc_open,proc_close，本地开发环境解禁这两个函数，不过建议用户不要使用这两个函数
+
+[bug]	*修改自动更新后不能启动的问题
+[bug]	*更新后没有备份sae.conf文件
+[bug]	*重新启动本地开发环境会报apache端口被占的错误
+[bug]	*修改storage的getListByPath接口返回值不对的问题
+[bug]	*修改storage的接口getAttr返回值错误导致wrappers使用出错
+[bug]	*修改了mysql类get_data接口
+[bug]	*修改了tool.cmd长时间不操作，redis连接不上的问题
+[bug]	*修改了https端口被占，不能启动apache的问题
+[bug]	*本地环境调用imagecreatefromjpeg函数内存错误
+[bug]	*sae本地环境无法输出验证码图片
+[bug]	*将apache主配置文件中 alias /sae 和 alias /storage移动到默认虚拟主机中
+
+
+2012-02-28 [Version 1.1.0 released]
+	*支持appconfig服务
+	*修改了自动更新时会出错的bug
+	*如果redis或者apache端口号被占用，给用户提示。
+	*redis和apache启动后加上启动成功/启动失败
+	*kvdb中缺少replace接口
+	*kvdb中缺少set_options和get_options接口
+	*kvdb的init接口返回值不对
+	*kvdb的add接口出错的问题
+	*kvdb中不支持数组存储
+	*kvdb 的SaeKVWrapper添加
+	*php缺少PDO扩展
+	*用户可以自己配置apache和redis的端口号
+	*添加两条命令upconfig $version,upallconfig，用来更新用户的config.yaml文件
+	*本地开发环境中不能__autoload的问题
+	*本地开发环境中php的curl扩展问题，会出现关于CURLOPT_FOLLOWLOCATION的错误
+	*命令行输入提示 "LocalSAE> " "LocalSAE >" "LocalSAE>"不统一
+	*storage的getList接口返回与SAE线上环境不同
+	*本地开发环境添加restart命令，用来重启apache
+	*移动本地开发环境不能启动的问题
+	*添加saever命令，用来显示本地开发环境的当前版本
+	*添加Uninstall这个命令，用来卸载本地开发环境
+	
+
+2012-01-19 [Version 1.0.0 released]
+	*添加了自动升级功能
+	*修改了kvdb不能set的bug
+	*添加了kvdb的add接口
+	*本地开发环境出现乱码
+	*本地开发环境不支持.htaccess文件（当前版本会支持.htaccess文件，后面版本支持AppConfig后将不会在使用.htaccess文件）。

@@ -1,0 +1,15 @@
+<?php
+define('SAE_MYSQL_USER', '[$user]');
+define('SAE_MYSQL_PASS', '[$pass]');
+define('SAE_MYSQL_HOST_M', '[$host]');
+define('SAE_MYSQL_HOST_S', '[$host]');
+define('SAE_MYSQL_PORT', '[$port]');
+
+// document root
+$_SERVER['DOCUMENT_ROOT'] = '[$DOCUMENT_ROOT]' ;
+
+define('HTTP_PORT','[$http_port]') ;
+define('HTTPS_PORT','[$https_port]') ;
+define('REDIS_HOST','[$redis_host]') ;
+define('REDIS_PORT','[$redis_port]') ;
+?>

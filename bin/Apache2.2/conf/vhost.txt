@@ -1,0 +1,33 @@
+<VirtualHost *:80>
+    DocumentRoot   "[$DocumentRoot]" 
+    ServerName     [$ServerName]
+#    ServerAlias    [$ServerAlias]
+	php_value open_basedir  "[$open_basedir]"
+	
+    RequestHeader set ACCESSKEY     "[$access]"                                                                                
+    RequestHeader set SECRETKEY     "[$secret]"
+    RequestHeader set MYSQLPORT     "[$port]"
+    RequestHeader set APPHASH       "647"
+    RequestHeader set APPNAME       "[$appname]"
+    RequestHeader set APPVERSION    "[$appversion]" 
+	RequestHeader set MCIP          "127.0.0.1"
+</VirtualHost>
+
+<VirtualHost *:443>
+    DocumentRoot   "[$DocumentRoot]" 
+    ServerName     [$ServerName]
+#    ServerAlias    [$ServerAlias]
+	php_value open_basedir  "[$open_basedir]"
+	
+    RequestHeader set ACCESSKEY     "[$access]"                                                                                
+    RequestHeader set SECRETKEY     "[$secret]"
+    RequestHeader set MYSQLPORT     "[$port]"
+    RequestHeader set APPHASH       "647"
+    RequestHeader set APPNAME       "[$appname]"
+    RequestHeader set APPVERSION    "[$appversion]" 
+	RequestHeader set MCIP          "127.0.0.1"
+	
+	SSLEngine on
+	SSLCertificateFile "conf/server.crt"
+	SSLCertificateKeyFile "conf/server.key"
+</VirtualHost>

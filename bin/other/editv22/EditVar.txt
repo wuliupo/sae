@@ -1,0 +1,217 @@
+EditVar/EditV32/EditV64 2.2
+(C) 2006-2010 by Bill Stewart (bstewart@iname.com)
+
+Description:
+
+EditVar/EditV32/EditV64 is intended for use in shell scripts (aka batch files).
+It provides the ability to interactively edit an environment variable's value.
+It is provided in three versions:
+
+*   EDITVAR.EXE - real-mode MS-DOS version; works in MS-DOS and in Windows
+    9x/Me COMMAND.COM sessions
+
+*   EditV32.exe - Windows x86 (32-bit) console program; requires Windows NT 4.0
+    or later; does not work on Windows 9x/Me
+
+*   EditV64.exe - Windows x64 (64-bit) console program
+
+In this documentation, EditVar refers to any version of the program.
+
+EditVar works by obtaining the an environment variable's value (if it exists)
+and presents it on the screen for editing. If you make changes to the variable,
+EditVar writes the variable back to the environment.
+
+MS-DOS      The MS-DOS version locates the current program's parent environment
+            (i.e., the environment block of the program that called it), and
+            sets the variable in the parent environment. This procedure is
+            specific to MS-DOS and does not work in Windows NT 4.0 or later.
+
+Windows     The Windows x86 and x64 versions obtain the process id of the
+x86/x64     parent process (i.e., the program that started EditV32.exe or
+            EditV64.exe), and they use Windows API calls to set the variable in
+            the environment for the parent process. Note that the x86 version
+            (EditV32.exe) will not work on Windows 9x/Me because the Win32 API
+            calls it uses do not exist on Win9x/Me, so it will not execute in
+            that environment. EditV32.exe requires Windows NT 4.0 or later.
+
+            Note that this behavior is markedly different from most other
+            Windows environment modification tools. Most other tools make
+            changes to the registry entries that the command shell (usually
+            Cmd.exe) reads when it starts. With most of these other tools, if
+            you make changes to the registry, the current Cmd.exe session won't
+            see them, even if the tool broadcasts the change to Windows.
+            EditV32.exe and EditV64.exe don't work this way; they can add
+            variables to the Cmd.exe session that started it, as if you used
+            the Set command at the prompt.
+
+Cmd.exe in Windows 2000 and later provides the Set /p command to allow user
+input into an environment variable, but EditVar provides a richer set of
+features:
+
+*   It allows you to edit a variable, not just set one.
+
+*   It can limit the length of the typed variable.
+
+*   It can provide masked input for simple password security.
+
+*   It can limit typed input to numbers only.
+
+*   It offers a timeout feature.
+
+*   It can "escape" reserved shell characters in variables it creates (see
+    below for more information).
+
+*   It provides several useful exit codes.
+
+*   The real mode MS-DOS version can be used on MS-DOS bootable media.
+
+For these reasons, EditVar may be preferable to Set /p except in environments
+where third-party executables are prohibited.
+
+Usage:
+
+EditVar [-b] [-e] [-l len] [-m] [-n] [-o] [-p prompt] [-t n] [-u] var
+
+Arguments:
+
+-b          Place the cursor at the beginning of the input line (instead of the
+            end).
+
+-e          Do not insert shell escape characters before reserved shell
+            characters in the environment variable's contents. (Windows x86/x64
+            only)
+
+-l len      Limits input to 'len' characters. In MS-DOS, the limit is 255
+            characters; In Windows x86/x64, the limit is 2047 characters.
+
+-m          Masked input: Displays '*' for typed characters.
+
+-n          Restricts input to numbers only (0-9).
+
+-o          Starts the line editor in overtype mode instead of insert mode.
+
+-p prompt   Specifies a prompt for the user. If it contains spaces or tabs,
+            enclose it in quotes (").
+
+-t n        Assume Enter was pressed if nothing typed within 'n' seconds.
+
+-u          Forces entered characters to uppercase.
+
+var         The environment variable's name (required). This name can be up to
+            127 characters long. If the variable name contains spaces, enclose
+            it in quotes.
+
+Note that EditVar has only one required command-line argument: The name of the
+environment variable you want to edit. All other arguments are optional.
+
+Note: You must place the environment variable name last on the command line
+after all other arguments. All other arguments may appear in any order.
+
+If the /? argument is present and is first on the command line, the program
+will display a short usage message.
+
+Exit Codes:
+
+1       The command line contains an error
+2       Nothing was typed on the input line
+3       The environment variable's contents was not changed
+4       The user pressed Ctrl-C to abort input
+8       Insufficient space in environment to store variable (MS-DOS only)
+126     Wrong operating system version or platform
+
+Notes:
+
+*   The Line Editor
+
+    The Line editor uses the following keyboard commands:
+
+    Keystroke           Effect
+    ---------------------------------------------------------------------------
+    Home                Beginning of input line
+    End                 End of input line
+    Left Arrow          Left one character
+    Right Arrow         Right one character
+    Ctrl-Left Arrow     Left one word
+    Ctrl-Right Arrow    Right one word
+    Ctrl-Home           Delete from cursor position to beginning of input line
+    Ctrl-End            Delete from cursor position to the end of input line
+    Esc                 Delete the entire input line
+    Ctrl-U or Ctrl-Z    Undo (restore the line's original contents)
+    Insert              Toggle insert mode
+    Backspace           Delete character to left of cursor
+    Delete              Delete current character
+    Ctrl-C              Abort input
+
+    There is no visual indication of insert or overtype mode. The line editor
+    defaults to insert mode unless the -o argument exists on the command line.
+
+*   MS-DOS Version Notes
+
+    *   You can use the MS-DOS version on Windows 9x/Me. It also works in
+        real mode DOS (for example, a DOS diskette).
+
+    *   The MS-DOS version does not work (and won't run) on Windows NT 4.0 or
+        later.
+
+    *   You can't use any of the following characters in an environment
+        variable: < > |
+
+    *   An environment variable's contents can be up to 255 characters long.
+
+    *   If there is not enough space in the environment block to store the
+        variable, EditVar.exe will return an exit code of 8.
+
+*   Windows x86 (32-bit) Version Notes
+
+    *   The Windows x86 (32-bit) version does not work (and won't run) on
+        Windows 9x/Me. Windows NT 4.0 or later is required.
+
+    *   The Windows x86 version (EditV32.exe) runs, but does not work, in x64
+        versions of Windows; it will not set the environment variable. You must
+        use EditV64.exe in x64 versions of Windows. You can check the value of
+        the PROCESSOR_ARCHITECTURE environment variable to decide which version
+        of EditVar you need.
+
+*   Windows x86/x64 Version Notes
+
+    *   The Windows x86 and x64 versions "escape" reserved shell characters in
+        the variable they write to the environment. The following characters
+        are reserved shell characters:
+
+        ( ) < > ^ & |
+
+        If any of these characters exist in the variable, EditVar will insert
+        the shell escape character (^) before each reserved character. The
+        variable will be truncated, if necessary, to accommodate the inserted
+        escape character(s).
+
+        Note that if you limit input to one character (-l 1) and you type a
+        single reserved shell character, EditVar will not save it to the
+        environment and will instead return an exit code of 2.
+
+        You can bypass this behavior with the -e argument.
+
+    *   If EditVar fails to set the environment variable in the target process,
+        it will display the Windows error message for the last Windows error it
+        encountered, and its exit code will equal the last Windows error.
+
+Examples:
+
+1.  editv32 -p "Enter your user name: " NAME
+
+    EditVar will display the following prompt:
+
+    Enter your user name:
+
+    It will then place the contents of the NAME variable on the input line for
+    editing.
+
+2.  editv32 -b -l 1 -o -p "Are you sure? " -u YN
+
+    If the variable YN exists, it will appear after the following prompt:
+
+    Are you sure?
+
+    EditVar will place the cursor at the beginning of the input (-b), limit
+    input to 1 character (-l 1), and input will be forced to uppercase (-u). In
+    addition, the line editor will start in overtype mode (-o).
