@@ -7,6 +7,7 @@ define('SAE_MYSQL_PORT', '[$port]');
 
 // document root
 $_SERVER['DOCUMENT_ROOT'] = '[$DOCUMENT_ROOT]' ;
+$_SERVER['HTTP_APPNAME'] = '[$appname]';
 
 define('HTTP_PORT','[$http_port]') ;
 define('HTTPS_PORT','[$https_port]') ;

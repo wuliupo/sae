@@ -7,6 +7,7 @@ define('SAE_MYSQL_PORT', '3306');
 
 // document root
 $_SERVER['DOCUMENT_ROOT'] = 'C:\dev\sae\wwwroot' ;
+$_SERVER['HTTP_APPNAME'] = 'pauli';
 
 define('HTTP_PORT','80') ;
 define('HTTPS_PORT','443') ;
