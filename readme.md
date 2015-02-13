@@ -143,6 +143,11 @@ appconfig，counter，FetchURL，KVDB ，Mail ，Memcache，MySQL ，Rank ，Sto
 
 通过SAE本地开发环境的配置文件已经配置好了代码所在的根目录，即$DocumentRoot，默认的$DocumentRoot是本地开发环境的wwwroot目录底下。在$DocumentRoot目录中找到已经创建的应用名，在这个应用名底下找到创建的版本号文件夹，现在你就可以在这个文件夹下开始书写你的代码了。
 
+配置：
+
+- bin\Apache2.2\conf\httpd.conf
+- emulation\core.function.php
+
 ## 应用访问：
 
 这里假定用户没有修改sae.conf中的domain配置参数，使用默认值'sinaapp'
